@@ -12,6 +12,20 @@ namespace Omnipay\Ecopayz\Message;
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     /**
+     * Test Endpoint URL
+     *
+     * @var string URL
+     */
+    protected $testEndpoint = 'https://secure.test.ecopayz.com/services/MerchantAPI/MerchantAPIService.asmx';
+
+    /**
+     * Live Endpoint URL
+     *
+     * @var string URL
+     */
+    protected $liveEndpoint = 'https://secure.ecopayz.com/services/MerchantAPI/MerchantAPIService.asmx';
+
+    /**
      * Get the Merchant ID
      *
      * This is the merchant number and is a four digit numeric value,
@@ -94,6 +108,37 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setMerchantAccountNumber($value)
     {
         return $this->setParameter('merchantAccountNumber', $value);
+    }
+
+    /**
+     * Get the request callback URL.
+     *
+     * @return string
+     */
+    public function getCallbackUrl()
+    {
+        return $this->getParameter('callbackUrl');
+    }
+
+    /**
+     * Sets the request callback URL.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setCallbackUrl($value)
+    {
+        return $this->setParameter('callbackUrl', $value);
+    }
+
+    /**
+     * Get API endpoint URL
+     *
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
     /**
